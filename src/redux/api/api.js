@@ -1,0 +1,4 @@
+export const LOGIN_USER_URL = "http://localhost:3001/api/v1/user/login";
+
+//Créer toutes les routes dans swagger
+
