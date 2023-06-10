@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Navigation from "./navigation/Navigation";
 import { Provider } from "react-redux";
@@ -18,6 +20,7 @@ function App() {
   };
   return (
     <Provider store={store}>
+       <ToastContainer />
       <Navigation />
     </Provider>
   );
