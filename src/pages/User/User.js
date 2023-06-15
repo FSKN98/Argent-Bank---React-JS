@@ -1,14 +1,19 @@
 import React from "react";
 import "../../pages/Main.css";
 import { useSelector } from "react-redux";
+import { useState } from "react";
+import UserNameForm from "../../components/userNameForm/UserNameForm";
 
-function User()
-{
+
+
+function User() {
   const { user } = useSelector((state) => ({
     user: state.userReducer.user,
- 
   }));
-     console.log(user)
+  console.log(user);
+  const [editingName, setEditingName] = useState(false);
+
+
   return (
     <div>
       <main className="main bg-dark">
@@ -18,8 +23,13 @@ function User()
             <br />
             {`${user.firstName} ${user.lastName}`}
           </h1>
-          <button className="edit-button">Edit Name</button>
+     <button className="edit-button" onClick={() => setEditingName(true)}>Edit Name</button>
         </div>
+
+   {editingName && <UserNameForm firstName={user.firstName} lastName={user.lastName} />}
+
+
+       
         <h2 className="sr-only">Accounts</h2>
         <section className="account">
           <div className="account-content-wrapper">
