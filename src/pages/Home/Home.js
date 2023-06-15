@@ -1,43 +1,15 @@
 import React from "react";
 import "../../pages/Main.css";
-import argentBankLogo from "../../img/argentBankLogo.png";
 import iconChat from "../../img/icon-chat.png";
 import iconMoney from "../../img/icon-money.png";
 import iconSecurity from "../../img/icon-security.png";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 
-const Home = () =>
-{
-  const navigate = useNavigate()
-  const { token } = useSelector(state => ({
-   token:state.userReducer.token
-  }))
-  const goToUser = () =>
-  {
-    navigate("/user")
-  }
+
+const Home = () => {
+ 
   return (
     <div>
-      <nav className="main-nav">
-        <a className="main-nav-logo" href="/">
-          <img
-            className="main-nav-logo-image"
-            src={argentBankLogo}
-            alt="Bank Tree"
-          />
-
-          <h1 className="sr-only">Argent Bank</h1>
-        </a>
-        <div>
-           <div onClick={goToUser}>User</div>
-          <Link className="main-nav-item" to="/sign-in">
-            <i className="fa fa-user-circle"></i>
-            {token ? "Sign Out" : "Sign In"}
-           
-          </Link>
-        </div>
-      </nav>
+      
       <main>
         <div className="hero">
           <section className="hero-content">

@@ -5,16 +5,26 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Home from "../pages/Home/Home";
 import SignIn from "../pages/SignIn/SignIn";
 import User from "../pages/User/User";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUserToken } from "../redux/actions/user";
+import Header from "../components/header/Header";
 
 export default function Navigation() {
-  const { token } = useSelector(state => ({
-   token:state.userReducer.token
- }))
+  const dispatch = useDispatch();
+  const { token } = useSelector((state) => ({
+    token: state.userReducer.token,
+  }));
+  useEffect(() => {
+    const tokenFromStorage = localStorage.getItem("token");
+    if (tokenFromStorage) {
+      loginUserToken(tokenFromStorage, dispatch);
+    }
+    console.log(tokenFromStorage);
+  }, []);
   const authNavigator = () => {
     return (
       <Routes>
@@ -27,12 +37,17 @@ export default function Navigation() {
   const appNavigator = () => {
     return (
       <Routes>
-              <Route exact path="/user" element={<User />} />
+        <Route exact path="/user" element={<User />} />
         <Route exact path="/" element={<Home />} />
-  
+
         <Route exact path="/*" element={<Navigate to="/" />} />
       </Routes>
     );
   };
-  return <Router>{token ? appNavigator() : authNavigator()}</Router>;
+  return (
+    <Router>
+      <Header />
+      {token ? appNavigator() : authNavigator()}
+    </Router>
+  );
 }

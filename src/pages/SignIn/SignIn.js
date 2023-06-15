@@ -1,46 +1,26 @@
 import React, { useState } from "react";
 import "../../pages/Main.css";
-import argentBankLogo from "../../img/argentBankLogo.png";
-import { Link, useNavigate } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../redux/actions/user";
 import { useDispatch } from "react-redux";
 
-const SignIn = () =>
-{
-
-  const dispatch = useDispatch()
-  const navigate = useNavigate ()
+const SignIn = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const onLoginUser = (e) => {
     e.preventDefault();
     const body = { email, password };
-    loginUser(body,goToUser, dispatch);
+    loginUser(body, goToUser, dispatch);
   };
-   const goToUser = () =>
-  {
-    navigate("/user")
-  }
+  const goToUser = () => {
+    navigate("/user");
+  };
   return (
     <div>
-      <nav className="main-nav">
-        <a className="main-nav-logo" href="/">
-          <img
-            className="main-nav-logo-image"
-            src={argentBankLogo}
-            alt="Bank Tree"
-          />
-
-          <h1 className="sr-only">Argent Bank</h1>
-        </a>
-        <div>
-          <Link className="main-nav-item" to="/sign-in">
-            <i className="fa fa-user-circle"></i>
-            Sign In
-          </Link>
-        </div>
-      </nav>
       <main className="main bg-dark">
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>
