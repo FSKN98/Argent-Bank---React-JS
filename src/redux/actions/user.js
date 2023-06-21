@@ -56,7 +56,6 @@ export const loginUserToken = (token, dispatch) => {
       }
     )
     .then((response) => {
-
       dispatch({
         type: LOGIN_USER_SUCCESS,
         payload: { token: token, user: response.data.body },

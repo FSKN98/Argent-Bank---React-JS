@@ -12,8 +12,9 @@ export default function Header() {
 
   const navigate = useNavigate();
 
-  const { token } = useSelector((state) => ({
+  const { token, user } = useSelector((state) => ({
     token: state.userReducer.token,
+    user: state.userReducer.user,
   }));
   const goToUser = () => {
     navigate("/user");
@@ -31,10 +32,13 @@ export default function Header() {
           <h1 className="sr-only">Argent Bank</h1>
         </a>
         <div>
-          <div onClick={goToUser}>User</div>
+          <div onClick={goToUser}>{user?.userName}</div>
           {token ? (
             <div onClick={() => logoutUser(dispatch)}>
-              <FontAwesomeIcon icon={faRightFromBracket} className="iconeBack" />
+              <FontAwesomeIcon
+                icon={faRightFromBracket}
+                className="iconeBack"
+              />
               Sign Out
             </div> //Fonction fléché pour que ca se lance que au click (uniquement quand il y a parametre)
           ) : (

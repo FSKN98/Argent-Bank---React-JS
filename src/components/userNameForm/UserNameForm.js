@@ -1,73 +1,72 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../userNameForm/UserNameForm.css"; //Importation des modules nécessaires, notamment useState pour la gestion des états
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { USER_PROFILE_URL } from "../../redux/api/api";
+import { loginUserToken } from "../../redux/actions/user";
 
-function UserNameForm({ firstName, lastName }) {
-  const [newUserName, setNewUserName] = useState("");
-  const [newFirstName, setNewFirstName] = useState("");
-  //Pour afficher les valeurs initiales des champs "FirstName" et "LastName"
-  //useState permet de stocket les valeurs saisi par l'itulisateur dans les champs
+function UserNameForm() {
+  const dispatch = useDispatch();
+  const { user, token } = useSelector((state) => ({
+    user: state.userReducer.user,
+    token: state.userReducer.token,
+  }));
+  // On récupère le user qu'on a dans Redux
 
-  const handleUserNameChange = (event) => {
-    setNewUserName(event.target.value);
+  const [userName, setUserName] = useState(""); // On déclarer un userName avec une valeur vide
+  useEffect(() => {
+    setUserName(user.userName); // On met la valeur du userName à jour avec le userName réel de l'utilisateur
+  }, [user]);
+
+  const handleUserNameChange = (e) => {
+    setUserName(e.target.value);
   };
 
-  const handleFirstNameChange = (event) => {
-    setNewFirstName(event.target.value);
-  };
-  //Fonctions pour la gestion des évènements de modification (les mettre à jour)
+  const updadeUser = (e) => {
+    e.preventDefault();
+    const body = { userName: userName };
+    console.log(body);
 
-  const handleCancel = () => {
-    setNewUserName("");
-  };
-  //Fonction pour réinitialiser l'état "newUserName" à une chaine vide quand l'utilisateur clique sur "Cancel"
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Pour que la page ne recharge pas
-    updateUserName(newUserName);
-    updateFirstName(newFirstName);
-  };
-
-  const updateUserName = (newUserName) => {
-    // Appel à l'API pour mettre à jour le nom d'utilisateur
-    console.log(`Updating username: ${newUserName}`);
-  };
-
-  const updateFirstName = (newFirstName) => {
-    // Appel à l'API pour mettre à jour le prénom
-    console.log(`Updating first name: ${newFirstName}`);
+    axios
+      .put(USER_PROFILE_URL, body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        loginUserToken(token, dispatch);
+      });
   };
 
   return (
     <div className="formContainer">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => updadeUser(e)}>
         <label>
           User Name:
-          <input
-            type="text"
-            value={newUserName}
-            onChange={handleUserNameChange}
-          />
+          <input type="text" value={userName} onChange={handleUserNameChange} />
         </label>
         <label>
           First Name:
           <input
             type="text"
-            value={firstName}
+            value={user.firstName}
             readOnly
             className="grayButton"
           />
         </label>
         <label>
           Last Name:
-          <input type="text" value={lastName} readOnly className="grayButton" />
+          <input
+            type="text"
+            value={user.lastName}
+            readOnly
+            className="grayButton"
+          />
         </label>
 
         <div className="button-container">
           <button type="submit">Save</button>
-          <button type="button" onClick={handleCancel}>
-            Cancel
-          </button>
+          <button type="button">Cancel</button>
         </div>
       </form>
     </div>

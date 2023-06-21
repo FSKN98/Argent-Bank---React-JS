@@ -25,29 +25,16 @@ export default function Navigation() {
     }
     console.log(tokenFromStorage);
   }, []);
-  const authNavigator = () => {
-    return (
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route exact path="/sign-in" element={<SignIn />} />
-        <Route exact path="/*" element={<Navigate to="/" />} />
-      </Routes>
-    );
-  };
-  const appNavigator = () => {
-    return (
-      <Routes>
-        <Route exact path="/user" element={<User />} />
-        <Route exact path="/" element={<Home />} />
-
-        <Route exact path="/*" element={<Navigate to="/" />} />
-      </Routes>
-    );
-  };
+  
   return (
     <Router>
       <Header />
-      {token ? appNavigator() : authNavigator()}
+     <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/sign-in" element={<SignIn />} />
+        <Route exact path="/*" element={<Navigate to="/" />} />
+        <Route exact path="/user" element={<User />} />
+      </Routes>
     </Router>
   );
 }

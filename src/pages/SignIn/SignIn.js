@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../pages/Main.css";
 
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../redux/actions/user";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { token } = useSelector((state) => ({
+    token: state.userReducer.token,
+  }));
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token, navigate]); //Pour que la page "SignIn" ne s'affiche pas quand l'utilisateur est connecté
 
   const onLoginUser = (e) => {
     e.preventDefault();
