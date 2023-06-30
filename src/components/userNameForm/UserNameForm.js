@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { USER_PROFILE_URL } from "../../redux/api/api";
 import { loginUserToken } from "../../redux/actions/user";
+import { toast } from "react-toastify";
 
 function UserNameForm() {
   const dispatch = useDispatch();
@@ -35,6 +36,9 @@ function UserNameForm() {
       })
       .then(() => {
         loginUserToken(token, dispatch);
+      })
+      .catch((err) => {
+        toast(err.message);
       });
   };
 

@@ -24,16 +24,20 @@ export default function Navigation() {
       loginUserToken(tokenFromStorage, dispatch);
     }
     console.log(tokenFromStorage);
-  }, []);
-  
+  }, [dispatch]);
+
   return (
     <Router>
       <Header />
-     <Routes>
+      <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route exact path="/sign-in" element={<SignIn />} />
+        <Route
+          exact
+          path="/sign-in"
+          element={token ? <Navigate to="/" /> : <SignIn />}
+        />
         <Route exact path="/*" element={<Navigate to="/" />} />
-        <Route exact path="/user" element={<User />} />
+        <Route exact path="/user" element={!token?<Navigate to="/sign-in" />:<User />} />
       </Routes>
     </Router>
   );

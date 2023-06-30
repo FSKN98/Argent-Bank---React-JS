@@ -60,7 +60,9 @@ export const loginUserToken = (token, dispatch) => {
         type: LOGIN_USER_SUCCESS,
         payload: { token: token, user: response.data.body },
       });
-      console.log(response.data.body);
+    })
+    .catch(() => {
+      logoutUser(dispatch);
     });
 };
 

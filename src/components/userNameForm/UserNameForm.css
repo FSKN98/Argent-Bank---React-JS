@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 2rem;
 }
 
 label {
@@ -14,12 +15,12 @@ label input {
   margin-left: 10px;
 }
 .button-container {
-    display: flex;
-        justify-content: center;
-        margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
 }
-.grayButton{
-    background-color: lightgray;
+.grayButton {
+  background-color: lightgray;
 }
 
 .button-container button {

@@ -19,17 +19,17 @@ function User() {
           <h1>
             Welcome back
             <br />
-            {`${user.firstName} ${user.lastName}`}
+            {`${user.firstName} ${user.lastName}`} !
           </h1>
           <button className="edit-button" onClick={() => setEditingName(true)}>
             Edit Name
           </button>
-        </div>
+      
 
         {editingName && (
           <UserNameForm firstName={user.firstName} lastName={user.lastName} />
         )}
-
+  </div>
         <h2 className="sr-only">Accounts</h2>
         <section className="account">
           <div className="account-content-wrapper">
